@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { nanoid } from '@reduxjs/toolkit'
 
 const initialState = [
   { id: '1', title: 'First Post!', content: 'Hello!' },
@@ -11,8 +12,20 @@ const postsSlice = createSlice({
   reducers: {
     // 現在の状態とdispatchされたアクションを引数で受け取る
     // createSliceは自動的に同名のaction creatorを作成する。
-    postAdded(state, action) {
-      state.push(action.payload)
+    postAdded: {
+      reducer(state, action) {
+        state.push(action.payload)
+      },
+      // payloadオブジェクトの状態？を内包することによって、オブジェクト生成に関するロジックを一元管理し、重複コードを書かなく済んだ。
+      prepare(title, content) {
+        return {
+          payload: {
+            id: nanoid(),
+            title,
+            content,
+          },
+        }
+      },
     },
     postUpdated(state, action) {
       const { id, title, content } = action.payload

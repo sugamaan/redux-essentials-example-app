@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { nanoid } from '@reduxjs/toolkit'
 
 import { postAdded } from './postsSlice'
 
@@ -17,13 +16,7 @@ export const AddPostForm = () => {
     // dispatchを使って投稿を保存
     // fromを空にする
     if (title && content) {
-      dispatch(
-        postAdded({
-          id: nanoid(),
-          title,
-          content,
-        }),
-      )
+      dispatch(postAdded(title, content))
     }
 
     setTitle('')
