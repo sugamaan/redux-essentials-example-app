@@ -17,12 +17,13 @@ const postsSlice = createSlice({
         state.push(action.payload)
       },
       // payloadオブジェクトの状態？を内包することによって、オブジェクト生成に関するロジックを一元管理し、重複コードを書かなく済んだ。
-      prepare(title, content) {
+      prepare(title, content, userId) {
         return {
           payload: {
             id: nanoid(),
             title,
             content,
+            user: userId,
           },
         }
       },
